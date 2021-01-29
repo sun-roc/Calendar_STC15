@@ -41,11 +41,11 @@ Docs 文件夹为搭建项目过程中学习相关元器件和软件使用方法
 
 1. 学习了Keil C51的基本操作(包括建立工程,DEBUG,联合Proteus远程调试等)
 
-
+   [Keil使用指南](https://github.com/XupengSun/Calendar_STC15/blob/main/Docs/Keil%E4%BD%BF%E7%94%A8%E7%AC%94%E8%AE%B0.md)
 
 2. 学习了Proteus和Altium Designer的基本使用搭建了本次项目,仿真所需要的环境
 
-
+   [Altium designer使用指南](https://github.com/XupengSun/Calendar_STC15/blob/main/Docs/Altium%20Desinger%E4%BD%BF%E7%94%A8%E7%AC%94%E8%AE%B0.md)
 
 3. 有关读取DS1302中年、月、日、时、分、秒的程序设计并搭建了仿真环境
 

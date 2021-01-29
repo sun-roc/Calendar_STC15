@@ -1,4 +1,4 @@
-# Altium designer使用指南
+# Altium designer使用笔记
 
 > 版本号:19.0.12
 >
