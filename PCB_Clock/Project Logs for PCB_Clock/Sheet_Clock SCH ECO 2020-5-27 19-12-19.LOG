@@ -1,0 +1,16 @@
+Replace Part C1 普通电容 in D:\SingleChip\PCB\PCB_Clock\Sheet_Clock.SchDoc with 普通电容 from Schlib_Clock.SchLib
+Replace Part C2 普通电容 in D:\SingleChip\PCB\PCB_Clock\Sheet_Clock.SchDoc with 普通电容 from Schlib_Clock.SchLib
+Replace Part C9 普通电容 in D:\SingleChip\PCB\PCB_Clock\Sheet_Clock.SchDoc with 普通电容 from Schlib_Clock.SchLib
+Replace Part E1 C-CAP in D:\SingleChip\PCB\PCB_Clock\Sheet_Clock.SchDoc with C-CAP from Schlib_Clock.SchLib
+Replace Part LCD1 CH12864I in D:\SingleChip\PCB\PCB_Clock\Sheet_Clock.SchDoc with CH12864I from Schlib_Clock.SchLib
+Replace Part R1 R SIP9 in D:\SingleChip\PCB\PCB_Clock\Sheet_Clock.SchDoc with R SIP9 from Schlib_Clock.SchLib
+Replace Part SW1 TSW 3x6 in D:\SingleChip\PCB\PCB_Clock\Sheet_Clock.SchDoc with TSW 3x6 from Schlib_Clock.SchLib
+Replace Part SW2 TSW 3x6 in D:\SingleChip\PCB\PCB_Clock\Sheet_Clock.SchDoc with TSW 3x6 from Schlib_Clock.SchLib
+Replace Part SW3 TSW 3x6 in D:\SingleChip\PCB\PCB_Clock\Sheet_Clock.SchDoc with TSW 3x6 from Schlib_Clock.SchLib
+Replace Part SW4 TSW 3x6 in D:\SingleChip\PCB\PCB_Clock\Sheet_Clock.SchDoc with TSW 3x6 from Schlib_Clock.SchLib
+Replace Part SW5 TSW 3x6 in D:\SingleChip\PCB\PCB_Clock\Sheet_Clock.SchDoc with TSW 3x6 from Schlib_Clock.SchLib
+Replace Part U1 89C51 in D:\SingleChip\PCB\PCB_Clock\Sheet_Clock.SchDoc with 89C51 from Schlib_Clock.SchLib
+Replace Part U2 DS18B20 in D:\SingleChip\PCB\PCB_Clock\Sheet_Clock.SchDoc with DS18B20 from Schlib_Clock.SchLib
+Replace Part U3 DS1302 in D:\SingleChip\PCB\PCB_Clock\Sheet_Clock.SchDoc with DS1302 from Schlib_Clock.SchLib
+Replace Part X1 XTAL-2P in D:\SingleChip\PCB\PCB_Clock\Sheet_Clock.SchDoc with XTAL-2P from Schlib_Clock.SchLib
+Replace Part X2 XTAL-2P in D:\SingleChip\PCB\PCB_Clock\Sheet_Clock.SchDoc with XTAL-2P from Schlib_Clock.SchLib

@@ -1,0 +1,178 @@
+C51 COMPILER V9.56.0.0   MAIN                                                              06/03/2020 22:20:02 PAGE 1   
+
+
+C51 COMPILER V9.56.0.0, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN .\Objects\Main.obj
+COMPILER INVOKED BY: D:\Program Files (x86)\keil\C51\BIN\C51.EXE ..\Source\Main.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTE
+                    -XTEND PRINT(.\Listings\Main.lst) TABS(2) OBJECT(.\Objects\Main.obj)
+
+line level    source
+
+   1          /****************************文件包含*************************************/
+   2          #include "reg52.h "
+   3          #include "character.h"
+   4          #include "lcd.h"
+   5          #include "clock.h"
+   6          #include "sensor.h"
+   7          #include "calendar.h"
+   8          #include "key.h"
+   9          
+  10          /*****************************预定义**************************************/
+  11          #define uchar unsigned char
+  12          #define uint unsigned int
+  13          /****************************************************************************/
+  14          sbit bell = P1 ^ 6; //定义蜂鸣器端口
+  15          sbit test = P1 ^ 7;
+  16          /*****************************************************************************
+  17          * 名称: Timer0_Service() inturrupt 1
+  18          * 功能: 中断服务程序 整点报时 3声嘟嘟的声音
+  19          * 入口参数:
+  20          * 出口参数:
+  21          *****************************************************************************/
+  22          void Timer0_Service() interrupt 1
+  23          {
+  24   1        static uchar count = 0;
+  25   1        static uchar flag = 0; //记录鸣叫的次数
+  26   1        count = 0;
+  27   1        TR0 = 0; //关闭Timer0
+  28   1        TH0 = 0x3c;
+  29   1        TL0 = 0XB0; //延时 50 ms
+  30   1        TR0 = 1;  //启动Timer0
+  31   1        count++;
+  32   1        if (count == 20) //鸣叫 1 秒
+  33   1        {
+  34   2          bell = ~bell;
+  35   2          count = 0;
+  36   2          flag++;
+  37   2        }
+  38   1        if (flag == 6)
+  39   1        {
+  40   2          flag = 0;
+  41   2          TR0 = 0; //关闭Timer0
+  42   2        }
+  43   1      }
+  44          
+  45          /*****************************************************************************
+  46          * 名称: Timer2_Servie() interrupt 5
+  47          * 功能: 中断服务程序  整点报时 一分钟
+  48          * 入口参数: 
+  49          * 出口参数:
+  50          *****************************************************************************/
+  51          uchar HexNum_Convert(uchar HexNum) /*时间存储个位和十位的方式与我们用的十进制不一样
+             -，你懂的，呵呵--BB车*/
+  52          {
+  53   1        uchar Numtemp;
+C51 COMPILER V9.56.0.0   MAIN                                                              06/03/2020 22:20:02 PAGE 2   
+
+  54   1        Numtemp = (HexNum >> 4) * 10 + (HexNum & 0X0F);
+  55   1        return Numtemp;
+  56   1      }
+  57          /******************************************************************************
+  58          * 函数名称：main()
+  59          * 功    能：
+  60          * 入口参数：
+  61          * 出口参数：
+  62          ********************************************************************************/
+  63          void main(void)
+  64          {
+  65   1        uchar ring = 0; //闹钟停止与否的标志
+  66   1        bit am = 0;
+  67   1        uchar clock_time[7] = {0X00, 0X59, 0X23, 0X09, 0X04, 0X11, 0x00};
+  68   1        //定义时间变量 秒  分 时 日 月 年
+  69   1        uchar alarm_time[2] = {55, 20};
+  70   1        //闹钟设置  alarm_time[0]: 分钟  alarm_time[1] :小时
+  71   1        uchar temperature[2];
+  72   1        //定义温度变量   temperature[0]  低8位   temperature[1]  高8位
+  73   1      
+  74   1        Lcd_Initial();         //LCD初始化
+  75   1        Clock_Fresh(clock_time);   //我把时间刷新放在这里，proteus会调用当前系统时间，别问
+             -为什么，经验，呵呵
+  76   1        Clock_Initial(clock_time); //时钟初试化
+  77   1        test = 0;
+  78   1      
+  79   1        /***********************中断初始化***************************/
+  80   1        EA = 1;    //开总中断
+  81   1        ET0 = 1;   //Timer0 开中断
+  82   1        ET2 = 1;   //Timer2 开中断
+  83   1        TMOD = 0x01; //Timer0 工作方式 1
+  84   1        RCAP2H = 0x3c;
+  85   1        RCAP2L = 0xb0; //Timer2 延时 50 ms
+  86   1      
+  87   1        while (1)
+  88   1        {
+  89   2          switch (Key_Scan()) //KEY_SAN()
+  90   2          {
+  91   3          case UpButton:
+  92   3          {
+  93   4            Key_Wait();
+  94   4          }
+  95   3          break;
+  96   3          case DownButton:
+  97   3          {
+  98   4            Key_Wait();
+  99   4          }
+ 100   3          break;
+ 101   3          case BackButton:
+ 102   3          {
+ 103   4            am = ~am;
+ 104   4            Key_Wait();
+ 105   4          }
+ 106   3          break;
+ 107   3          case MenuButton:
+ 108   3          {
+ 109   4            Key_Function(clock_time, alarm_time);
+ 110   4          }
+ 111   3          case null:
+ 112   3          {
+ 113   4            Clock_Fresh(clock_time);   //时间刷新
+ 114   4            Lcd_Clock(clock_time, am);   //时间显示
+C51 COMPILER V9.56.0.0   MAIN                                                              06/03/2020 22:20:02 PAGE 3   
+
+ 115   4            Sensor_Fresh(temperature);   //温度更新
+ 116   4            Lcd_Temperture(temperature); //温度显示
+ 117   4      
+ 118   4            Calendar_Convert(0, clock_time); //农历转换与显示
+ 119   4            Lcd_Week(clock_time);
+ 120   4      
+ 121   4            //整点报时
+ 122   4            //   if( ( * clock_time == 0x59 ) && ( * ( clock_time + 1 ) == 0x59 ) )
+ 123   4            //   {
+ 124   4            //      bell = 0;
+ 125   4            //   TR2 = 1; //启动Timer2
+ 126   4            //   }
+ 127   4            //闹钟报警
+ 128   4            while (*alarm_time == HexNum_Convert(*(clock_time + 1)))
+ 129   4            {                                                    //分钟相吻合
+ 130   5              if (*(alarm_time + 1) == HexNum_Convert(*(clock_time + 2)) && (Key_Scan() == null) && (ring == 0)) //�
+             -��时相吻合
+ 131   5              {
+ 132   6                bell = 0;
+ 133   6                // TR2 = 1; //启动Timer2
+ 134   6              }
+ 135   5              if (*(alarm_time + 1) == HexNum_Convert(*(clock_time + 2)) && (Key_Scan() != null))
+ 136   5              {
+ 137   6                bell = 1;
+ 138   6                ring = 1;
+ 139   6              }
+ 140   5            }
+ 141   4            ring = 0;
+ 142   4          }
+ 143   3          break;
+ 144   3          }
+ 145   2        }
+ 146   1      }
+*** WARNING C291 IN LINE 268 OF ..\Source\Main.c: not every exit path returns a value
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =   5927    ----
+   CONSTANT SIZE    =   4461    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      2      99
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----      17
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  1 WARNING(S),  0 ERROR(S)

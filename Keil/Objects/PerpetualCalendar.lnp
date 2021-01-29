@@ -1,0 +1,3 @@
+".\Objects\Main.obj" 
+TO ".\Objects\PerpetualCalendar" 
+PRINT(".\Listings\PerpetualCalendar.m51")
